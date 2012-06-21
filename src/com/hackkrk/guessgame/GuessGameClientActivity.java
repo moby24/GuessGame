@@ -102,7 +102,7 @@ public class GuessGameClientActivity extends Activity {
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
 
-    final Context mContext = getApplicationContext();
+    final Context mContext = this;
     LayoutInflater inflater = (LayoutInflater) mContext
         .getSystemService(LAYOUT_INFLATER_SERVICE);
     View layout = inflater.inflate(R.layout.login_dialog,
