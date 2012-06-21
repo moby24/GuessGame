@@ -1,6 +1,12 @@
 package com.hackkrk.guessgame.model;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.graphics.Bitmap;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 
 //"id": 1,
 //"question": "What is it?",
@@ -12,8 +18,7 @@ import org.json.JSONObject;
 //"points": 2, // Points user earns for solving the riddle
 //"solved": false
 
-public class Riddle implements ConvertibleToJson
-{
+public class Riddle implements ConvertibleToJson {
   public String id;
   public String question;
   public String photo_url;
@@ -23,10 +28,25 @@ public class Riddle implements ConvertibleToJson
   public String solved_by;
   public String points;
   public Boolean solved;
-  
+
+  public String answer;
+  public Bitmap photo;
+
   @Override
   public JSONObject toJson() {
-    // TODO Auto-generated method stub
-    return null;
+    JSONObject jsonRepresentation = new JSONObject();
+    try {
+      jsonRepresentation.put("question", question);
+      jsonRepresentation.put("answer", answer);
+      ByteArrayOutputStream stream = new ByteArrayOutputStream();
+      photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+      byte[] byteArray = stream.toByteArray();
+
+      jsonRepresentation.put("photo", Base64.encode(byteArray, Base64.DEFAULT));
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return jsonRepresentation;
   }
 }
