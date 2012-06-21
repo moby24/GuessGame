@@ -1,7 +1,11 @@
 package com.hackkrk.guessgame.api;
 
+import com.hackkrk.guessgame.model.Riddle;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.util.List;
 
 public class GuessGameApi {
 
@@ -11,7 +15,9 @@ public class GuessGameApi {
     HttpClient client = new DefaultHttpClient();
     return client;
   }
-  
-  
+
+  public List<Riddle> getRiddles() {
+    return null;
+  }
 
 }
