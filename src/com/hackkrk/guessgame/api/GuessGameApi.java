@@ -13,11 +13,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-
-import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuessGameApi {
@@ -29,7 +31,36 @@ public class GuessGameApi {
     return client;
   }
 
+  //Request
+
+  //{
+  // "page": 2,
+  // "per_page": 10
+  //}
+  //
+  ////Response
+  //{
+  // "total": 47
+  // "page": 2,
+  // "page_count": 5,
+  // "riddles": […] // Array of riddles presented as in `POST /riddles` response.
+  //}
+
   public List<Riddle> getRiddles() {
+    String string = get("/riddles");
+    try {
+      JSONObject jsonObject = new JSONObject(string);
+      JSONArray jsonArray = jsonObject.getJSONArray("riddles");
+      ArrayList<Riddle> listOfRiddles = new ArrayList<Riddle>();
+      for (int i = 0; i < jsonArray.length(); i++) {
+        listOfRiddles.add(Riddle.fromJson(jsonArray.get(i)));
+      }
+      return listOfRiddles;
+
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return null;
   }
 
