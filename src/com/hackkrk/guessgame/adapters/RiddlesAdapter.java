@@ -3,6 +3,7 @@ package com.hackkrk.guessgame.adapters;
 import java.util.List;
 
 import com.hackkrk.guessgame.model.Riddle;
+import com.hackkrk.guessgame.utils.ImageDownloader;
 
 import android.content.Context;
 import android.view.View;
@@ -26,7 +27,7 @@ public class RiddlesAdapter extends BaseAdapter {
   }
 
   @Override
-  public Object getItem(int arg0) {
+  public Riddle getItem(int arg0) {
     return list.get(arg0);
   }
 
@@ -44,7 +45,8 @@ public class RiddlesAdapter extends BaseAdapter {
     }else {
       image = (ImageView) convertView;
     }
-    return null;
+    ImageDownloader.getInstance().download(getItem(position).photo_url, image);
+    return image;
   }
 
 }

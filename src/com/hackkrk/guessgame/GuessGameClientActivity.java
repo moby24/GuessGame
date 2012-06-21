@@ -118,7 +118,7 @@ public class GuessGameClientActivity extends Activity {
 
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        GuessGameApi guessApi = new GuessGameApi();
+        GuessGameApi guessApi = new GuessGameApi(mContext);
         User user = guessApi.loginUser(userNameEdiText.getText().toString(),
             userPassEditText.getText().toString());
         if (user == null) {
