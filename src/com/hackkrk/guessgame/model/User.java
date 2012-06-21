@@ -8,6 +8,10 @@ public class User implements ConvertibleToJson {
   public String username;
   public String token;
   public String password;
+  
+  public User() {
+    // TODO Auto-generated constructor stub
+  }
 
   public User(String username, String password) {
     this.username = username;
