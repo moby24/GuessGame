@@ -53,7 +53,7 @@ public class GuessGameApi {
       JSONArray jsonArray = jsonObject.getJSONArray("riddles");
       ArrayList<Riddle> listOfRiddles = new ArrayList<Riddle>();
       for (int i = 0; i < jsonArray.length(); i++) {
-        listOfRiddles.add(Riddle.fromJson(jsonArray.get(i)));
+        listOfRiddles.add(Riddle.fromJson(jsonArray.getJSONObject(i)));
       }
       return listOfRiddles;
 

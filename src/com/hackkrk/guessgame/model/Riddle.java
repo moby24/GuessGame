@@ -50,7 +50,8 @@ public class Riddle implements ConvertibleToJson {
     return jsonRepresentation;
   }
 
-  public static Riddle fromJson(Object object) {
+  public static Riddle fromJson(JSONObject jsonObject) {
+    
     // TODO Auto-generated method stub
     return null;
   }
