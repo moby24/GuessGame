@@ -64,6 +64,18 @@ public class GuessGameApi {
     return null;
   }
 
+  public Riddle sendRiddle(Riddle riddle) {
+    String post = post(riddle, "/riddles");
+    try {
+      return Riddle.fromJson(new JSONObject(post));
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return null;
+
+  }
+
   public User registerUser(String login, String password) {
     return null;
   }
@@ -91,7 +103,7 @@ public class GuessGameApi {
 
   }
 
-  int post(ConvertibleToJson json, String path) {
+  String post(ConvertibleToJson json, String path) {
     HttpClient httpClient = getHttpClient();
 
     HttpPost post = new HttpPost(API_ROOT_HTTP + path);
@@ -99,7 +111,7 @@ public class GuessGameApi {
     try {
       post.setEntity(new ByteArrayEntity(json.toJson().toString().getBytes("UTF8")));
       HttpResponse execute = httpClient.execute(post);
-      return execute.getStatusLine().getStatusCode();
+      return EntityUtils.toString(execute.getEntity());
 
     } catch (UnsupportedEncodingException e) {
       // TODO Auto-generated catch block
@@ -111,7 +123,7 @@ public class GuessGameApi {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return -1;
+    return "";
   }
 
 }
