@@ -5,11 +5,14 @@ import com.hackkrk.guessgame.model.Riddle;
 import com.hackkrk.guessgame.model.User;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
@@ -36,6 +39,25 @@ public class GuessGameApi {
 
   public User loginUser(String login, String password) {
     return null;
+  }
+
+  String get(String path) {
+    try {
+      HttpClient httpClient = getHttpClient();
+      HttpGet get = new HttpGet(API_ROOT_HTTP + path);
+
+      HttpResponse execute = httpClient.execute(get);
+      return EntityUtils.toString(execute.getEntity());
+
+    } catch (ParseException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return "";
+
   }
 
   int post(ConvertibleToJson json, String path) {
