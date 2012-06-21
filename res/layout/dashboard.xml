@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello" />
+
+    <Button
+        android:id="@+id/riddlesButton"
+        android:text="@string/dashboard_riddle_button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </Button>
+    
+    
+    <Button
+        android:id="@+id/crearteRiddleButton"
+        android:text="@string/dashboard_add_riddle_button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </Button>
+    
+    
+    <Button
+        android:id="@+id/leaderboardButton"
+        android:text="@string/dashboard_leaderboard_button_text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+    </Button>
+
+    <Button android:id="@+id/addNewRiddleButton" />
+
+</LinearLayout>

@@ -3,5 +3,10 @@
 
     <string name="hello">Hello World, GuessGameClientActivity!</string>
     <string name="app_name">GuessGameClient</string>
+    <string name="dashboard_riddle_button_text">Riddles</string>
+    <string name="dashboard_add_riddle_button_text">Create riddle</string>
+    <string name="dashboard_leaderboard_button_text">Leaderboard</string>
+    <string name="user">Login</string>
+    <string name="pass">Password</string>
 
 </resources>

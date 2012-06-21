@@ -13,11 +13,26 @@ public final class R {
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
     }
+    public static final class id {
+        public static final int addNewRiddleButton=0x7f050003;
+        public static final int crearteRiddleButton=0x7f050001;
+        public static final int dialogRoot=0x7f050004;
+        public static final int leaderboardButton=0x7f050002;
+        public static final int riddlesButton=0x7f050000;
+        public static final int userName=0x7f050005;
+        public static final int userPass=0x7f050006;
+    }
     public static final class layout {
-        public static final int main=0x7f030000;
+        public static final int dashboard=0x7f030000;
+        public static final int login_dialog=0x7f030001;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int dashboard_add_riddle_button_text=0x7f040003;
+        public static final int dashboard_leaderboard_button_text=0x7f040004;
+        public static final int dashboard_riddle_button_text=0x7f040002;
         public static final int hello=0x7f040000;
+        public static final int pass=0x7f040006;
+        public static final int user=0x7f040005;
     }
 }
