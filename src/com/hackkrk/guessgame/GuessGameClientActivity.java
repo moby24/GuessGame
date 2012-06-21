@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.hackkrk.guessgame.api.GuessGameApi;
 import com.hackkrk.guessgame.model.User;
@@ -52,6 +54,12 @@ public class GuessGameClientActivity extends Activity {
         fireCreateRiddleIntent();
       }
     });
+    
+    
+    User user = getUser();
+    if (user == null) {
+      createLoginDialog();
+    }
 
   }
 
@@ -59,8 +67,10 @@ public class GuessGameClientActivity extends Activity {
 
     SharedPreferences preferences = getPreferences(MODE_PRIVATE);
     User user = new User();
-    user.username = preferences.getString(USER_LOGIN, null);
-
+    user.token = preferences.getString(USER_LOGIN, null);
+    if (user.token == null) {
+      return null;
+    }
     return user;
 
   }
@@ -79,12 +89,20 @@ public class GuessGameClientActivity extends Activity {
     // TODO Auto-generated method stub
 
   }
+  
+  private void saveUser(User user) {
+    SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+    Editor editor = preferences.edit();
+    editor.putString(USER_LOGIN, user.token);
+    editor.commit();
+
+  }
 
   private void createLoginDialog() {
     AlertDialog.Builder builder;
     AlertDialog alertDialog;
 
-    Context mContext = getApplicationContext();
+    final Context mContext = getApplicationContext();
     LayoutInflater inflater = (LayoutInflater) mContext
         .getSystemService(LAYOUT_INFLATER_SERVICE);
     View layout = inflater.inflate(R.layout.login_dialog,
@@ -101,8 +119,13 @@ public class GuessGameClientActivity extends Activity {
       @Override
       public void onClick(DialogInterface dialog, int which) {
         GuessGameApi guessApi = new GuessGameApi();
-        guessApi.loginUser(userNameEdiText.getText().toString(),
+        User user = guessApi.loginUser(userNameEdiText.getText().toString(),
             userPassEditText.getText().toString());
+        if (user == null) {
+          Toast.makeText(mContext, R.string.authentication_failed, Toast.LENGTH_LONG);
+        } else {
+          saveUser(user);
+        }
       }
 
     });
@@ -114,6 +137,7 @@ public class GuessGameClientActivity extends Activity {
     });
     builder.setView(layout);
     alertDialog = builder.create();
+    alertDialog.show();
 
   }
 

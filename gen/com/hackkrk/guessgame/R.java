@@ -17,6 +17,7 @@ public final class R {
         public static final int addNewRiddleButton=0x7f050003;
         public static final int crearteRiddleButton=0x7f050001;
         public static final int dialogRoot=0x7f050004;
+        public static final int gridview=0x7f050007;
         public static final int leaderboardButton=0x7f050002;
         public static final int riddlesButton=0x7f050000;
         public static final int userName=0x7f050005;
@@ -25,9 +26,11 @@ public final class R {
     public static final class layout {
         public static final int dashboard=0x7f030000;
         public static final int login_dialog=0x7f030001;
+        public static final int riddles=0x7f030002;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
+        public static final int authentication_failed=0x7f040007;
         public static final int dashboard_add_riddle_button_text=0x7f040003;
         public static final int dashboard_leaderboard_button_text=0x7f040004;
         public static final int dashboard_riddle_button_text=0x7f040002;
