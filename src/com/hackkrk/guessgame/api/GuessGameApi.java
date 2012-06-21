@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class GuessGameApi {
 
-  private static String API_ROOT_HTTP = "http://hackkrk-guess.herokuapp.com";
+  private static String API_ROOT_HTTP = "http://hackkrk-guess-static.herokuapp.com";
   private Context mContext;
 
   HttpClient getHttpClient() {
@@ -110,7 +111,8 @@ public class GuessGameApi {
   }
 
   public User loginUser(String login, String password) {
-    String string = get("/users?username=" + login + "&password=" + password);
+    String string = get("/user?username=" + login + "&password=" + password);
+    Toast.makeText(mContext, string, Toast.LENGTH_LONG).show();
     try {
       return User.fromJson(new JSONObject(string));
     } catch (JSONException e) {

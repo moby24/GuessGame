@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialogRoot"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" android:id="@+id/dialogRoot">
+    android:orientation="vertical" >
 
     <TextView
         android:layout_width="fill_parent"
@@ -12,7 +13,9 @@
     <EditText
         android:id="@+id/userName"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="hackkrk" />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -21,6 +24,8 @@
     <EditText
         android:id="@+id/userPass"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:inputType="textPassword"/>
-    
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:text="dead00coffee" />
+
 </LinearLayout>

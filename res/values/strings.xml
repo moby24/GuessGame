@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, GuessGameClientActivity!</string>
+    <string name="hello">Welcome to Guess Game!</string>
     <string name="app_name">GuessGameClient</string>
     <string name="dashboard_riddle_button_text">Riddles</string>
     <string name="dashboard_add_riddle_button_text">Create riddle</string>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -86,7 +87,9 @@ public class GuessGameClientActivity extends Activity {
   }
 
   protected void fireRiddlesIntent() {
-    // TODO Auto-generated method stub
+    Intent riddlesIntent = new Intent(this, RiddlesActivity.class);
+    startActivity(riddlesIntent);
+    
 
   }
   
@@ -122,7 +125,8 @@ public class GuessGameClientActivity extends Activity {
         User user = guessApi.loginUser(userNameEdiText.getText().toString(),
             userPassEditText.getText().toString());
         if (user == null) {
-          Toast.makeText(mContext, R.string.authentication_failed, Toast.LENGTH_LONG);
+          Toast.makeText(mContext, R.string.authentication_failed, Toast.LENGTH_LONG).show();
+          createLoginDialog();
         } else {
           saveUser(user);
         }

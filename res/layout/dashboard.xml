@@ -11,27 +11,23 @@
 
     <Button
         android:id="@+id/riddlesButton"
-        android:text="@string/dashboard_riddle_button_text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </Button>
-    
-    
-    <Button
-        android:id="@+id/crearteRiddleButton"
-        android:text="@string/dashboard_add_riddle_button_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </Button>
-    
-    
-    <Button
-        android:id="@+id/leaderboardButton"
-        android:text="@string/dashboard_leaderboard_button_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_riddle_button_text" >
     </Button>
 
-    <Button android:id="@+id/addNewRiddleButton" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/crearteRiddleButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_add_riddle_button_text" >
+    </Button>
+
+    <Button
+        android:id="@+id/leaderboardButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dashboard_leaderboard_button_text" >
+    </Button>
 
 </LinearLayout>

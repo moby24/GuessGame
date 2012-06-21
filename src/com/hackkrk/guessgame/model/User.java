@@ -32,8 +32,15 @@ public class User implements ConvertibleToJson {
   }
 
   public static User fromJson(JSONObject jsonObject) {
-    // TODO Auto-generated method stub
-    return null;
+    User user = new User();
+    try {
+      user.username = jsonObject.getString("username");
+      user.token = jsonObject.getString("token");
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return user;
   }
 
 }
