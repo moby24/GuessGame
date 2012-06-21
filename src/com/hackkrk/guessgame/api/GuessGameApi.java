@@ -12,7 +12,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class GuessGameApi {
 
-  private static String API_ROOT_HTTP = "http://hackkrk-guess-static.herokuapp.com";
+  private static String API_ROOT_HTTP = "http://hackkrk-guess.herokuapp.com";
   private Context mContext;
 
   HttpClient getHttpClient() {
@@ -76,6 +77,7 @@ public class GuessGameApi {
 
   public Riddle sendRiddle(Riddle riddle) {
     String post = post(riddle, "/riddles");
+    Toast.makeText(mContext, post, Toast.LENGTH_LONG).show();
     try {
       return Riddle.fromJson(new JSONObject(post));
     } catch (JSONException e) {
@@ -87,8 +89,10 @@ public class GuessGameApi {
 
   public boolean sendAnswer(Answer answer, String riddleId) {
     String post = post(answer, "/riddles/" + riddleId + "/answer");
+    Log.d("xxx", post);
     try {
-      return Answer.fromJson(new JSONObject(post)).correct;
+      Answer fromJson = Answer.fromJson(new JSONObject(post));
+      return fromJson.correct;
     } catch (JSONException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -128,8 +132,8 @@ public class GuessGameApi {
       HttpGet get = new HttpGet(API_ROOT_HTTP + path);
 
       String userToken = CurrentUser.getUserToken(mContext);
-
       get.addHeader("X-Auth-Token", userToken);
+
       HttpResponse execute = httpClient.execute(get);
       return EntityUtils.toString(execute.getEntity());
 
@@ -148,11 +152,18 @@ public class GuessGameApi {
     HttpClient httpClient = getHttpClient();
 
     HttpPost post = new HttpPost(API_ROOT_HTTP + path);
+    String userToken = CurrentUser.getUserToken(mContext);
+    post.addHeader("X-Auth-Token", userToken);
+    post.addHeader("Content-type", "application/json");
 
     try {
-      post.setEntity(new ByteArrayEntity(json.toJson().toString().getBytes("UTF8")));
+      String stringRepresentation = json.toJson().toString();
+      StringEntity entity = new StringEntity(stringRepresentation);
+      post.setEntity(entity);
       HttpResponse execute = httpClient.execute(post);
-      return EntityUtils.toString(execute.getEntity());
+      String string = EntityUtils.toString(execute.getEntity());
+      Toast.makeText(mContext, string, Toast.LENGTH_LONG).show();
+      return string;
 
     } catch (UnsupportedEncodingException e) {
       // TODO Auto-generated catch block

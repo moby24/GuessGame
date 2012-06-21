@@ -5,8 +5,10 @@ import org.json.JSONObject;
 
 import android.graphics.Bitmap;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
 //"id": 1,
 //"question": "What is it?",
@@ -18,7 +20,11 @@ import java.io.ByteArrayOutputStream;
 //"points": 2, // Points user earns for solving the riddle
 //"solved": false
 
-public class Riddle implements ConvertibleToJson {
+public class Riddle implements ConvertibleToJson, Serializable {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 2384148779905440288L;
   public String id;
   public String question;
   public String photo_url;
@@ -38,21 +44,33 @@ public class Riddle implements ConvertibleToJson {
     try {
       jsonRepresentation.put("question", question);
       jsonRepresentation.put("answer", answer);
+      
       ByteArrayOutputStream stream = new ByteArrayOutputStream();
-      photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+      photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
       byte[] byteArray = stream.toByteArray();
 
-      jsonRepresentation.put("photo", Base64.encode(byteArray, Base64.DEFAULT));
+      jsonRepresentation.put("photo", Base64.encodeToString(byteArray, Base64.DEFAULT));
     } catch (JSONException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    Log.d("xxx", jsonRepresentation.toString());
     return jsonRepresentation;
   }
 
   public static Riddle fromJson(JSONObject jsonObject) {
-    
-    // TODO Auto-generated method stub
-    return null;
+    Log.d("xxx", jsonObject.toString());
+    Riddle riddle = new Riddle();
+    try {
+      riddle.photo_url = jsonObject.getString("photo_url");
+      riddle.id = jsonObject.getString("id");
+      riddle.question = jsonObject.getString("question");
+      riddle.author = jsonObject.getString("author");
+      riddle.solved = jsonObject.getBoolean("solved");
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return riddle;
   }
 }

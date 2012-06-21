@@ -1,24 +1,27 @@
 package com.hackkrk.guessgame.adapters;
 
-import java.util.List;
-
+import com.hackkrk.guessgame.R;
 import com.hackkrk.guessgame.model.Riddle;
 import com.hackkrk.guessgame.utils.ImageDownloader;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import java.util.List;
 
 public class RiddlesAdapter extends BaseAdapter {
   Context context;
   private List<Riddle> list;
+  private LayoutInflater mInflater;
 
   public RiddlesAdapter(List<Riddle> riddles, Context context) {
     this.context = context;
-    this.list=riddles;
+    this.list = riddles;
+    mInflater = LayoutInflater.from(context);
   }
 
   @Override
@@ -38,14 +41,14 @@ public class RiddlesAdapter extends BaseAdapter {
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    ImageView image;
-    if(convertView==null){
-      image = new ImageView(context);
-      image.setLayoutParams(new LayoutParams(100,100 ));
-    }else {
-      image = (ImageView) convertView;
+    View image;
+    if (convertView == null) {
+      image = mInflater.inflate(R.layout.item_riddle, parent, false);
+    } else {
+      image = convertView;
     }
-    ImageDownloader.getInstance().download(getItem(position).photo_url, image);
+    ImageDownloader.getInstance().download(getItem(position).photo_url,
+        (ImageView) image.findViewById(R.id.riddle));
     return image;
   }
 

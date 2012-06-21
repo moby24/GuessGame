@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.hackkrk.guessgame.api.GuessGameApi;
 import com.hackkrk.guessgame.model.User;
+import com.hackkrk.guessgame.utils.CurrentUser;
 
 public class GuessGameClientActivity extends Activity {
   private static final String USER_LOGIN = null;
@@ -55,8 +56,7 @@ public class GuessGameClientActivity extends Activity {
         fireCreateRiddleIntent();
       }
     });
-    
-    
+
     User user = getUser();
     if (user == null) {
       createLoginDialog();
@@ -68,7 +68,7 @@ public class GuessGameClientActivity extends Activity {
 
     SharedPreferences preferences = getPreferences(MODE_PRIVATE);
     User user = new User();
-    user.token = preferences.getString(USER_LOGIN, null);
+    user.token = CurrentUser.getUserToken(this);
     if (user.token == null) {
       return null;
     }
@@ -77,7 +77,8 @@ public class GuessGameClientActivity extends Activity {
   }
 
   protected void fireCreateRiddleIntent() {
-    // TODO Auto-generated method stub
+    Intent riddlesIntent = new Intent(this, NewRiddleActivity.class);
+    startActivity(riddlesIntent);
 
   }
 
@@ -89,16 +90,11 @@ public class GuessGameClientActivity extends Activity {
   protected void fireRiddlesIntent() {
     Intent riddlesIntent = new Intent(this, RiddlesActivity.class);
     startActivity(riddlesIntent);
-    
 
   }
-  
-  private void saveUser(User user) {
-    SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-    Editor editor = preferences.edit();
-    editor.putString(USER_LOGIN, user.token);
-    editor.commit();
 
+  private void saveUser(User user) {
+    CurrentUser.setCurrenUser(this, user);
   }
 
   private void createLoginDialog() {
@@ -111,10 +107,8 @@ public class GuessGameClientActivity extends Activity {
     View layout = inflater.inflate(R.layout.login_dialog,
         (ViewGroup) findViewById(R.id.dialogRoot));
 
-    final EditText userNameEdiText = (EditText) layout
-        .findViewById(R.id.userName);
-    final EditText userPassEditText = (EditText) layout
-        .findViewById(R.id.userPass);
+    final EditText userNameEdiText = (EditText) layout.findViewById(R.id.userName);
+    final EditText userPassEditText = (EditText) layout.findViewById(R.id.userPass);
 
     builder = new AlertDialog.Builder(mContext);
     builder.setPositiveButton("Login", new DialogInterface.OnClickListener() {
@@ -125,7 +119,8 @@ public class GuessGameClientActivity extends Activity {
         User user = guessApi.loginUser(userNameEdiText.getText().toString(),
             userPassEditText.getText().toString());
         if (user == null) {
-          Toast.makeText(mContext, R.string.authentication_failed, Toast.LENGTH_LONG).show();
+          Toast.makeText(mContext, R.string.authentication_failed, Toast.LENGTH_LONG)
+              .show();
           createLoginDialog();
         } else {
           saveUser(user);

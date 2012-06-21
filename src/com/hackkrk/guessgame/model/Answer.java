@@ -9,8 +9,14 @@ public class Answer implements ConvertibleToJson {
 
   @Override
   public JSONObject toJson() {
-    // TODO Auto-generated method stub
-    return null;
+    JSONObject jsonObject = new JSONObject();
+    try {
+      jsonObject.put("answer", answer);
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return jsonObject;
   }
 
   public static Answer fromJson(JSONObject jsonObject) {
@@ -22,6 +28,6 @@ public class Answer implements ConvertibleToJson {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    return null;
+    return answer;
   }
 }
