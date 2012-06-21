@@ -4,6 +4,7 @@ import com.hackkrk.guessgame.model.Answer;
 import com.hackkrk.guessgame.model.ConvertibleToJson;
 import com.hackkrk.guessgame.model.Riddle;
 import com.hackkrk.guessgame.model.User;
+import com.hackkrk.guessgame.utils.CurrentUser;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -18,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -26,10 +29,15 @@ import java.util.List;
 public class GuessGameApi {
 
   private static String API_ROOT_HTTP = "http://hackkrk-guess.herokuapp.com";
+  private Context mContext;
 
   HttpClient getHttpClient() {
     HttpClient client = new DefaultHttpClient();
     return client;
+  }
+
+  public GuessGameApi(Context context) {
+    mContext = context;
   }
 
   //Request
@@ -87,15 +95,28 @@ public class GuessGameApi {
 
     return false;
   }
-  
-  
-  
 
   public User registerUser(String login, String password) {
+    User user = new User(login, password);
+    String post = post(user, "/users");
+    try {
+      return User.fromJson(new JSONObject(post));
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return null;
+
   }
 
   public User loginUser(String login, String password) {
+    String string = get("/users?username=" + login + "&password=" + password);
+    try {
+      return User.fromJson(new JSONObject(string));
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     return null;
   }
 
@@ -104,6 +125,9 @@ public class GuessGameApi {
       HttpClient httpClient = getHttpClient();
       HttpGet get = new HttpGet(API_ROOT_HTTP + path);
 
+      String userToken = CurrentUser.getUserToken(mContext);
+
+      get.addHeader("X-Auth-Token", userToken);
       HttpResponse execute = httpClient.execute(get);
       return EntityUtils.toString(execute.getEntity());
 

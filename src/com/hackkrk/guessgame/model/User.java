@@ -9,6 +9,11 @@ public class User implements ConvertibleToJson {
   public String token;
   public String password;
 
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
   @Override
   public JSONObject toJson() {
     JSONObject jsonObject = new JSONObject();
@@ -20,6 +25,11 @@ public class User implements ConvertibleToJson {
       e.printStackTrace();
     }
     return jsonObject;
+  }
+
+  public static User fromJson(JSONObject jsonObject) {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
