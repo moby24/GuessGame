@@ -1,5 +1,6 @@
 package com.hackkrk.guessgame.api;
 
+import com.hackkrk.guessgame.model.Answer;
 import com.hackkrk.guessgame.model.ConvertibleToJson;
 import com.hackkrk.guessgame.model.Riddle;
 import com.hackkrk.guessgame.model.User;
@@ -73,8 +74,22 @@ public class GuessGameApi {
       e.printStackTrace();
     }
     return null;
-
   }
+
+  public boolean sendAnswer(Answer answer, String riddleId) {
+    String post = post(answer, "/riddles/" + riddleId + "/answer");
+    try {
+      return Answer.fromJson(new JSONObject(post)).correct;
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    return false;
+  }
+  
+  
+  
 
   public User registerUser(String login, String password) {
     return null;
