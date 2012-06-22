@@ -2,6 +2,7 @@ package com.hackkrk.guessgame.api;
 
 import com.hackkrk.guessgame.model.Answer;
 import com.hackkrk.guessgame.model.ConvertibleToJson;
+import com.hackkrk.guessgame.model.LaderboardUser;
 import com.hackkrk.guessgame.model.Riddle;
 import com.hackkrk.guessgame.model.User;
 import com.hackkrk.guessgame.utils.CurrentUser;
@@ -74,9 +75,28 @@ public class GuessGameApi {
     }
     return null;
   }
+  
+  public List<LaderboardUser> getLaderboard() {
+    String string = get("/leaderboard");
+    Log.d("xxx", string);
+    try {
+      JSONObject jsonObject = new JSONObject(string);
+      JSONArray jsonArray = jsonObject.getJSONArray("users");
+      ArrayList<LaderboardUser> listOfUsers = new ArrayList<LaderboardUser>();
+      for (int i = 0; i < jsonArray.length(); i++) {
+        listOfUsers.add(LaderboardUser.fromJson(jsonArray.getJSONObject(i)));
+      }
+      return listOfUsers;
+      
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return null;
+  }
 
   public Riddle sendRiddle(Riddle riddle) {
-    String post = post(riddle, "/riddles");
+    String post = post(riddle, "/riddles?per_page=1000");
     Toast.makeText(mContext, post, Toast.LENGTH_LONG).show();
     try {
       return Riddle.fromJson(new JSONObject(post));
@@ -130,6 +150,7 @@ public class GuessGameApi {
     try {
       HttpClient httpClient = getHttpClient();
       HttpGet get = new HttpGet(API_ROOT_HTTP + path);
+      
 
       String userToken = CurrentUser.getUserToken(mContext);
       get.addHeader("X-Auth-Token", userToken);

@@ -83,6 +83,8 @@ public class GuessGameClientActivity extends Activity {
   }
 
   protected void fireLeaderboardIntent() {
+    Intent riddlesIntent = new Intent(this, LaderboardActivity.class);
+    startActivity(riddlesIntent);
     // TODO Auto-generated method stub
 
   }
